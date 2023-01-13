@@ -1,5 +1,5 @@
 - name: Deploy private image from nexus
-  hosts: dockerhost
+  hosts: client
   vars:
     nexus_registry: "20.163.228.142:8085"
     image_name: "nexus-pvt:latest"
