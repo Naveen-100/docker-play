@@ -1,18 +1,6 @@
 ---
   - name: Installing tomcat
-    hosts: client
-    vars:
-      tomcat_archive_tar: "https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.27/bin/apache-tomcat-10.0.27.tar.gz"
-      tomcat_archive: "apache-tomcat-10.0.27.tar.gz"
-      tomcat_users_file_src: "files/tomcat-users.xml"
-      tomcat_users_file_dest: "/opt/tomcat/conf/tomcat-users.xml"
-      manager_context_file_src: "files/context.xml"
-      manager_context_file_dest: "/opt/tomcat/webapps/manager/META-INF/context.xml"
-      host_manager_context_file_src: "files/host-manager.xml"
-      host_manager_context_file_dest: "/opt/tomcat/webapps/host-manager/META-INF/context.xml"
-      tomcat_service_src: "files/tomcat.service"
-      tomcat_service_dest: "/etc/systemd/system/tomcat.service"
-
+    hosts: tomcat-client
     tasks:
     - name: Create group for tomcat
       group:
@@ -41,15 +29,9 @@
       apt:
         name: default-jdk
         state: present
-
-    - name: Check the java version
-      shell: java -version
-      register: java_version
-      notify: java
-
     - name: download & unarchive tomcat10 
       unarchive:
-        src: '{{tomcat_archive_tar}}'
+        src: https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.4/bin/apache-tomcat-10.1.4.tar.gz
         dest: /opt/tomcat
         remote_src: yes
         extra_opts: [--strip-components=1]
@@ -63,26 +45,25 @@
         state: directory
     - name: edit tomcat users
       copy:
-        src: '{{tomcat_users_file_src}}'
-        dest: '{{tomcat_users_file_dest}}'
+        src: files/tomcat-users.xml
+        dest: /opt/tomcat/conf/tomcat-users.xml
     - name: edit tomcat manager
       copy:
-        src: '{{manager_context_file_src}}'
-        dest: '{{manager_context_file_dest}}'
+        src: files/context.xml
+        dest: /opt/tomcat/webapps/manager/META-INF/context.xml
     - name: edit tomcat host-manager
       copy:
-        src: '{{host_manager_context_file_src}}'
-        dest: '{{host_manager_context_file_dest}}'
+        src: files/host-manager.xml
+        dest: /opt/tomcat/webapps/host-manager/META-INF/context.xml
     - name: copy the tomcat.service file
       copy:
-        src: '{{tomcat_service_src}}'
-        dest: '{{tomcat_service_dest}}'
+        src: files/tomcat.service
+        dest: /etc/systemd/system/tomcat.service
     - name: Start and enable tomcat
       systemd:
         name: tomcat
         state: started
         daemon_reload: true
-
     - name: Check the status of Tomcat service
       shell: systemctl status tomcat
       register: tomcat
@@ -93,11 +74,9 @@
         rule: allow
         port: '80'
         proto: tcp
-    handlers:
-      - name: java 
-        debug:
-          var: java_version.stderr
 
+
+    handlers:
       - name: tomcat-service
         debug:
           var: tomcat.stdout_lines
