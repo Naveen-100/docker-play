@@ -5,15 +5,15 @@
   tasks:
     - name: Log into private registry and force re-authorization
       docker_login:
-        registry_url: 20.163.228.142:8085
+        registry: 20.163.228.142:8085
         username: admin
         password: admin
         reauthorize: true
     - name: excuting the container
       docker_container:
-        ame: nexus-pvt
+        name: nexus-pvt
         image: 20.163.228.142:8085/nexus-pvt
-        tate: started
+        state: started
         pull: 'true'
         ports:
           - "8082:8080"
