@@ -4,13 +4,13 @@
   become: true
   tasks:
     - name: Log into private registry and force re-authorization
-      community.docker.docker_login:
+      docker_login:
         registry_url: 20.163.228.142:8085
         username: admin
         password: admin
         reauthorize: true
     - name: excuting the container
-      community.docker.docker_container:
+      docker_container:
         ame: nexus-pvt
         image: 20.163.228.142:8085/nexus-pvt
         tate: started
