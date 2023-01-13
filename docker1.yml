@@ -5,10 +5,10 @@
   tasks:
     - name: Log into private registry and force re-authorization
       community.docker.docker_login:
-      registry_url: 20.163.228.142:8085
-      username: admin
-      password: admin
-      reauthorize: true
+        registry_url: 20.163.228.142:8085
+        username: admin
+        password: admin
+        reauthorize: true
     - name: excuting the container
       community.docker.docker_container:
         ame: nexus-pvt
