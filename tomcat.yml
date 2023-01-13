@@ -2,16 +2,16 @@
   - name: Installing tomcat
     hosts: client
     vars:
-    tomcat_archive_tar: "https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.27/bin/apache-tomcat-10.0.27.tar.gz"
-    tomcat_archive: "apache-tomcat-10.0.27.tar.gz"
-    tomcat_users_file_src: "files/tomcat-users.xml"
-    tomcat_users_file_dest: "/opt/tomcat/conf/tomcat-users.xml"
-    manager_context_file_src: "files/context.xml"
-    manager_context_file_dest: "/opt/tomcat/webapps/manager/META-INF/context.xml"
-    host_manager_context_file_src: "files/host-manager.xml"
-    host_manager_context_file_dest: "/opt/tomcat/webapps/host-manager/META-INF/context.xml"
-    tomcat_service_src: "files/tomcat.service"
-    tomcat_service_dest: "/etc/systemd/system/tomcat.service"
+      tomcat_archive_tar: "https://dlcdn.apache.org/tomcat/tomcat-10/v10.0.27/bin/apache-tomcat-10.0.27.tar.gz"
+      tomcat_archive: "apache-tomcat-10.0.27.tar.gz"
+      tomcat_users_file_src: "files/tomcat-users.xml"
+      tomcat_users_file_dest: "/opt/tomcat/conf/tomcat-users.xml"
+      manager_context_file_src: "files/context.xml"
+      manager_context_file_dest: "/opt/tomcat/webapps/manager/META-INF/context.xml"
+      host_manager_context_file_src: "files/host-manager.xml"
+      host_manager_context_file_dest: "/opt/tomcat/webapps/host-manager/META-INF/context.xml"
+      tomcat_service_src: "files/tomcat.service"
+      tomcat_service_dest: "/etc/systemd/system/tomcat.service"
 
     tasks:
     - name: Create group for tomcat
