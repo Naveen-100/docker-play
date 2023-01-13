@@ -3,25 +3,25 @@
   hosts: client
   become: true
   tasks:
-        - name: Log into private registry and force re-authorization
-          community.docker.docker_login:
-            registry_url: 20.163.228.142:8085
-            username: admin
-            password: admin
-            reauthorize: true
-        - name: excuting the container
-          community.docker.docker_container:
-            name: nexus-pvt
-            image: 20.163.228.142:8085/nexus-pvt
-            state: started
-            pull: 'true'
-            ports:
-            - "8082:8080"
-        - name: Connect to Tomcat server on port 8080
-          tags: test
-          uri:
-            url: http://localhost:8080
-          register: result
-          until: "result.status == 200"
-          retries: 5
-          delay: 10
+    - name: Log into private registry and force re-authorization
+      community.docker.docker_login:
+      registry_url: 20.163.228.142:8085
+      username: admin
+      password: admin
+      reauthorize: true
+    - name: excuting the container
+      community.docker.docker_container:
+        ame: nexus-pvt
+        image: 20.163.228.142:8085/nexus-pvt
+        tate: started
+        pull: 'true'
+        ports:
+          - "8082:8080"
+    - name: Connect to Tomcat server on port 8080
+      tags: test
+      uri:
+        url: http://localhost:8080
+      register: result
+      until: "result.status == 200"
+      retries: 5
+      delay: 10
