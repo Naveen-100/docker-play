@@ -16,7 +16,7 @@
         state: started
         pull: 'true'
         ports:
-          - "8080:8082"
+          - "8082:8082"
     - name: Connect to Tomcat server on port 8080
       tags: test
       uri:
