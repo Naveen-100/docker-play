@@ -1,30 +1,23 @@
-- name: Deploy private image from nexus
-  hosts: client
+---
+- name: Deploy Private Image from Nexus Repository
+  hosts: all
   vars:
-    nexus_registry: "20.163.228.142:8085"
-    image_name: "nexus-pvt:latest"
-    container_name: "myapp"
-    nexus_username: "admin"
-    nexus_password: "admin"
+    image_name: "my_private_image"
+    nexus_url: "http://20.163.228.142:8081"
+    nexus_repo: "nexus-pvt"
+    container_name: "my_container"
+    nexus_password : "admin"
+
   tasks:
-  - name: login to nexus
-    docker_login:
-      registry_url: "{{ nexus_registry }}"
-      username: "{{ nexus_username }}"
-      password: "{{ nexus_password }}"
+  - name: Login to Nexus
+    command: >
+      docker login {{ nexus_url }} -u admin -p {{ nexus_password }}
 
-  - name: pull image from nexus
-    docker_image:
-      name: "{{ nexus_registry }}/{{ image_name }}"
-      source: pull
+  - name: Pull Private Image
+    command: >
+      docker pull {{ nexus_url }}/{{ nexus_repo }}/{{ image_name }}
 
-  - name: stop running container
-    docker_container:
-      name: "{{ container_name }}"
-      state: stopped
-
-  - name: start new container
-    docker_container:
-      name: "{{ container_name }}"
-      image: "{{ nexus_registry }}/{{ image_name }}"
-      state: started
+  - name: Run Private Image in a container
+    command: >
+      docker run -d --name {{ container_name }}
+      {{ nexus_url }}/{{ nexus_repo }}/{{ image_name }}

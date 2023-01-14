@@ -1,0 +1,22 @@
+---
+- name: Deploy WAR file from Nexus to Tomcat
+  hosts: all
+  vars:
+    war_file: "jenkins-project-0.0.1-20230112.180733-1.war"
+    nexus_url: "http://20.163.228.142:8081/"
+    nexus_repo: "maven-snapshots"
+    tomcat_webapps: "/usr/local/tomcat/webapps"
+    nexus_password: "admin"
+
+  tasks:
+  - name: Login to Nexus
+    command: >
+      docker login {{ nexus_url }} -u admin -p {{ nexus_password }}
+
+  - name: Download WAR file from Nexus
+    command: >
+      wget {{ nexus_url }}/{{ nexus_repo }}/{{ war_file }} -P {{ tomcat_webapps }}
+
+  - name: Restart Tomcat
+    command: >
+      service tomcat restart
