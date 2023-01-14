@@ -3,7 +3,7 @@
   hosts: all
   vars:
     war_file: "jenkins-project-0.0.1-20230112.180733-1.war"
-    nexus_url: "http://20.163.228.142:8085/"
+    nexus_url: "http://20.163.228.142:8085"
     nexus_repo: "maven-snapshots"
     tomcat_webapps: "/usr/local/tomcat/webapps"
     nexus_password: "admin"
