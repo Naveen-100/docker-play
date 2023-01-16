@@ -63,8 +63,8 @@
         dest: "{{tomcat_context_dest}}"
     - name: edit tomcat host-manager
       copy:
-        src: "{{tomcat_host_src}}"
-        dest: "{{tomcat_host_dest}}"
+        src: "{{tomcat_host_manager_src}}"
+        dest: "{{tomcat_host_manager_dest}}"
     - name: copy the tomcat.service file
       copy:
         src: "{{tomcat_service_src}}"
