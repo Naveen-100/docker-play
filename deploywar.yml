@@ -5,14 +5,14 @@
   tasks:
     - name: Log into private registry and force re-authorization
       docker_login:
-        registry: 35.209.45.241:8085
+        registry: 20.163.228.142:8085
         username: admin
         password: admin
         reauthorize: yes
     - name: excuting the container
       docker_container:
         name: simple-web-app
-        image: 35.209.45.241:8085/nexus-pvt
+        image: 20.163.228.142:8085/nexus-pvt
         state: started
         pull: 'true'
         ports:
