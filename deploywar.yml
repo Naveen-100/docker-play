@@ -1,0 +1,27 @@
+---
+- name: Deploying docker image
+  hosts: client
+  become: true
+  tasks:
+    - name: Log into private registry and force re-authorization
+      docker_login:
+        registry: 35.209.45.241:8085
+        username: admin
+        password: admin
+        reauthorize: yes
+    - name: excuting the container
+      docker_container:
+        name: simple-web-app
+        image: 35.209.45.241:8085/nexus-pvt
+        state: started
+        pull: 'true'
+        ports:
+          - "8081:8080"
+    - name: Connect to Tomcat server on port 8080
+      tags: test
+      uri:
+        url: http://localhost:8080
+      register: result
+      until: "result.status == 200"
+      retries: 5
+      delay: 10
