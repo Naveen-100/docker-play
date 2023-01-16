@@ -1,6 +1,16 @@
 ---
   - name: Installing tomcat
-    hosts: tomcat-client
+    hosts: client
+    vars:
+      tomcat_archive_tar: "https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.4/bin/apache-tomcat-10.1.4.tar.gz"
+      tomcat_users_src : "files/tomcat-users.xml"
+      tomcat_users_dest : "/opt/tomcat/conf/tomcat-users.xml"
+      tomcat_context_src : "files/context.xml"
+      tomcat_context_dest : "/opt/tomcat/webapps/manager/META-INF/context.xml"
+      tomcat_host_manager_src : "files/host-manager.xml"
+      tomcat_host_manager_dest : "/opt/tomcat/webapps/host-manager/META-INF/context.xml"
+      tomcat_service_src : "files/tomcat.service"
+      tomcat_service_dest : "/etc/systemd/system/tomcat.service"
     tasks:
     - name: Create group for tomcat
       group:
@@ -31,7 +41,7 @@
         state: present
     - name: download & unarchive tomcat10 
       unarchive:
-        src: https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.4/bin/apache-tomcat-10.1.4.tar.gz
+        src: '{{tomcat_archive_tar}}'
         dest: /opt/tomcat
         remote_src: yes
         extra_opts: [--strip-components=1]
@@ -45,20 +55,20 @@
         state: directory
     - name: edit tomcat users
       copy:
-        src: files/tomcat-users.xml
-        dest: /opt/tomcat/conf/tomcat-users.xml
+        src: "{{tomcat_users_src}}"
+        dest: "{{tomcat_users_dest}}"
     - name: edit tomcat manager
       copy:
-        src: files/context.xml
-        dest: /opt/tomcat/webapps/manager/META-INF/context.xml
+        src: "{{tomcat_context_src}}"
+        dest: "{{tomcat_context_dest}}"
     - name: edit tomcat host-manager
       copy:
-        src: files/host-manager.xml
-        dest: /opt/tomcat/webapps/host-manager/META-INF/context.xml
+        src: "{{tomcat_host_src}}"
+        dest: "{{tomcat_host_dest}}"
     - name: copy the tomcat.service file
       copy:
-        src: files/tomcat.service
-        dest: /etc/systemd/system/tomcat.service
+        src: "{{tomcat_service_src}}"
+        dest: "{{tomcat_service_dest}}"
     - name: Start and enable tomcat
       systemd:
         name: tomcat
@@ -80,3 +90,4 @@
       - name: tomcat-service
         debug:
           var: tomcat.stdout_lines
+---
