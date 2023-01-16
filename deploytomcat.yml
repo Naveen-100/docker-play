@@ -4,7 +4,7 @@
   become: false
   vars:
     war_url : "http://20.163.228.142:8081/#browse/browse:maven-snapshots:jenkins-project/jenkins-project/V1-SNAPSHOT/jenkins-project-V1-20230116.063757-1.war"
-    war_destination : "/usr/share/tomcat/webapps"
+    war_destination : "/opt/tomcat/webapps/"
   tasks:
     - name: download file
       ansible.builtin.get_url:
