@@ -11,7 +11,7 @@
         reauthorize: yes
     - name: excuting the container
       docker_container:
-        name: simple-web-app
+        name: nexus-pvt
         image: 20.163.228.142:8085/nexus-pvt
         state: started
         pull: 'true'
