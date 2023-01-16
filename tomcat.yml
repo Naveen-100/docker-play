@@ -2,7 +2,7 @@
   - name: Installing tomcat
     hosts: client
     vars:
-      tomcat_archive_tar: "https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.4/bin/apache-tomcat-10.1.4.tar.gz"
+      tomcat_archive_tar: "https://dlcdn.apache.org/tomcat/tomcat-10/v10.1.5/bin/apache-tomcat-10.1.5.tar.gz"
       tomcat_users_src : "files/tomcat-users.xml"
       tomcat_users_dest : "/opt/tomcat/conf/tomcat-users.xml"
       tomcat_context_src : "files/context.xml"
