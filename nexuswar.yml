@@ -1,0 +1,40 @@
+--- 
+- name: Install and Configure Tomat 
+  hosts: all
+  become: yes
+  gather_facts: false
+  vars:
+    nexus_repository_url: "http://20.163.228.142:8081/repository/maven-snapshots"
+  tasks:
+    - name: Install lxml
+      apt:
+        name: python3-lxml
+        state: present 
+    - name: "Download war the file"
+      maven_artifact:
+        group_id: jenkins-project
+        artifact_id: jenkins-project
+        version: 0.0.1-20230112.180733-1
+        extension: war
+        repository_url: "{{ nexus_repository_url }}"
+        username: "admin"
+        password: "admin"
+        dest: "/opt/tomcat/webapps/hello-app.war"
+        mode: '0644'
+
+    - name: Reload and Start the Tomcat service
+      systemd:
+        daemon_reload: true
+        name: tomcat 
+        state: started
+        enabled: true 
+
+    - name: Check the status of Tomcat service
+      shell: systemctl status tomcat
+      register: tomcat
+      notify: tomcat-service
+
+  handlers:
+    - name: tomcat-service
+      debug:
+        var: tomcat.stdout_lines

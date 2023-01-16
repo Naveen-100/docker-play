@@ -6,12 +6,12 @@
     nexus_url: "http://20.163.228.142:8081/repository/maven-snapshots"
     nexus_repo: jenkins-project/jenkins-project/0.0.1-SNAPSHOT/"
     tomcat_webapps: "/usr/local/tomcat/webapps"
-    nexus_password: "admin"
+    nexus_uname : "admin"
 
   tasks:
   - name: Login to Nexus
     command: >
-      docker login {{ nexus_url }} -u admin -p {{ nexus_password }}
+      docker login {{ nexus_url }} -u {{ nexus_uname }} -p {{ nexus_uname }}
 
   - name: Download WAR file from Nexus
     command: >
