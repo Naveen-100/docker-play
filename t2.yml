@@ -8,8 +8,9 @@
   tasks:
     - name: Install lxml
       pip: 
-       name: lxml
-       
+        name: python3-lxml
+        state: present 
+        
     - name: "Download war file"
       maven_artifact:
         group_id: jenkins-project
