@@ -14,7 +14,7 @@
       maven_artifact:
         group_id: jenkins-project
         artifact_id: jenkins-project
-        version: 0.0.1-20230112.180733-1
+        version: V1-20230116.063757-1
         extension: war
         repository_url: "{{ nexus_repository_url }}"
         username: "admin"
