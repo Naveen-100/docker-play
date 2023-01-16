@@ -1,0 +1,29 @@
+---
+- name: Deploy war file in tomcat
+  hosts: client
+  become: true
+  vars:
+    username : "admin"
+    password : "admin"
+  tasks:
+    - name: Install lxml
+      pip: 
+       name: lxml
+       
+    - name: "Download war file"
+      maven_artifact:
+        group_id: jenkins-project
+        artifact_id: jenkins-project
+        version: V1-SNAPSHOT
+        extension: war
+        repository_url: "http://20.163.228.142:8081/repository/maven-snapshots"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        dest: "/opt/tomcat/webapps/nexus-pvt.war"
+        mode: '0644'
+
+    - name: Enable the tomcat service and start     
+      systemd:
+        name: tomcat
+        enabled: yes
+        state: restarted
