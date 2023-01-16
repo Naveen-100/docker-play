@@ -90,4 +90,3 @@
       - name: tomcat-service
         debug:
           var: tomcat.stdout_lines
----
